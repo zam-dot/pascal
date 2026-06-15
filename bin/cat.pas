@@ -1,5 +1,5 @@
 program cat;
-
+{test}
 {$mode objfpc}{$H+}{$J-}
 
 uses
@@ -12,7 +12,7 @@ const
     COLOR_ERROR = #27'[31m';  // Red for errors
 
 var
-    i:      integer;
+    i: integer;
     filename: string;
     showLineNumbers: boolean = False;
     showNonPrinting: boolean = False;
@@ -32,16 +32,14 @@ begin
     WriteLn('If no file is specified, reads from standard input.');
 end;
 
-procedure WriteWithEscapes(const s: string);
+procedure WriteWithEscapes (const s: string);
 var
     j: integer;
     c: char;
 begin
     if not showNonPrinting then
         Write(s)
-    else
-    begin
-        for j := 1 to Length(s) do
+    else for j := 1 to Length(s) do
         begin
             c := s[j];
             case c of
@@ -60,18 +58,17 @@ begin
                     Write(c);
             end;
         end;
-    end;
 end;
 
-procedure ProcessFile(const fname: string);
+procedure ProcessFile (const fname: string);
 var
-    f:     file of byte;
+    f: file of byte;
     totalBytes: int64 = 0;
-    buf:   array[0..BUFFER_SIZE - 1] of byte;
+    buf: array[0..BUFFER_SIZE - 1] of byte;
     Count: longint;
     lineStart: boolean = True;
-    s:     string;
-    j:     integer;
+    s: string;
+    j: integer;
 begin
     if fname = '-' then
     begin
@@ -140,10 +137,8 @@ begin
                     end;
                 end
                 else
-                begin
-                    // Fast path - direct write
-                    FileWrite(StdOutputHandle, buf, Count);
-                end;
+                    FileWrite(StdOutputHandle, buf, Count)// Fast path - direct write
+                ;
                 Inc(totalBytes, Count);
             end;
         end;
@@ -188,16 +183,11 @@ begin
 
     // Process files
     if i > ParamCount then
-    begin
-        // No files specified - read from stdin
-        ProcessFile('-');
-    end
-    else
-    begin
-        while i <= ParamCount do
+        ProcessFile('-')// No files specified - read from stdin
+
+    else while i <= ParamCount do
         begin
             ProcessFile(ParamStr(i));
             Inc(i);
         end;
-    end;
 end.
