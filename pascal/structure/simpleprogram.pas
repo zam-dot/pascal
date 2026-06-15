@@ -1,45 +1,46 @@
-program SimpleProgram;
+Program SimpleProgram;
 
 {$mode objfpc}{$H+}{$J-}
 
-uses
+Uses
  {$IFDEF UNIX}
-    cthreads,
+        cthreads,
  {$ENDIF}
-    Classes,
-    SysUtils;
+        Classes,
+        SysUtils;
 
-const
-    student_id_prefix: string = 'ua-';
+Const
+        student_id_prefix: string = 'ua-';
 
-type
-    TStudent = record
-        studentId: string;
-        firstname: string;
-        lastname: string;
-    end;
+Type
+        TStudent = Record
+                studentId: string;
+                firstname: string;
+                lastname: string;
+        End;
 
 // Prints the contents of a TStudent var
-procedure PrintStudentInfo (student: TStudent);
-begin
-    WriteLn(student.studentId);
-    WriteLn(student.firstname, ' ', student.lastname);
-end;
+Procedure PrintStudentInfo (student: TStudent);
+Begin
+        WriteLn(student.studentId);
+        WriteLn(student.firstname, ' ', student.lastname);
+End;
 
-var
-    myStudent: TStudent;
+Var
+        test: integer; // test
+        myStudent: TStudent; // test
 
-begin
-    // The Main block/entry of the program
+Begin
+        // The Main block/entry of the program
 
-    WriteLn('Now : ', DateToStr(Now));
+        WriteLn('Now : ', DateToStr(Now));
 
-    myStudent.firstname := 'John';
-    myStudent.lastname := 'Costco';
-    myStudent.studentId := student_id_prefix + '2227209';
-    PrintStudentInfo(myStudent);
+        myStudent.firstname := 'John';
+        myStudent.lastname := 'Costco';
+        myStudent.studentId := student_id_prefix + '2227209';
+        PrintStudentInfo(myStudent);
 
-    // Pause console
-    WriteLn('Press Enter key to quit ...');
-    ReadLn();
-end.
+        // Pause console
+        WriteLn('Press Enter key to quit ...');
+        ReadLn();
+End.
