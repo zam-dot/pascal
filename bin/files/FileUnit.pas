@@ -14,6 +14,7 @@ type
         end;
 
 { --- Utility Functions: Low-level wrappers for Kernel operations --- }
+procedure ReadDirectory (directory: string);
 function FileOpen (const Path: string; Flags: integer): TFile;
 procedure FileClose (var F: TFile);
 function FileRead (var F: TFile; Buffer: Pointer; Count: SizeInt): SizeInt;
@@ -36,6 +37,29 @@ const
         O_APPEND = 1024; // Open for append.
 
 implementation
+
+procedure ReadDirectory (directory: string);
+var
+        adirent: PDirent;
+        thedir:  PDir;
+begin
+        thedir := fpOpenDir(directory);
+        if thedir = nil then
+        begin
+                writeln(stderr, 'error: could not open the directory.', directory);
+                exit;
+        end;
+
+        try
+                repeat
+                        adirent := fpReadDir(thedir^);
+                        if adirent = nil then Break;
+                        writeln(adirent^.d_name);
+                until false;
+        finally
+                fpCloseDir(thedir^);
+        end;
+end;
 
 function FileOpen (const Path: string; Flags: integer): TFile;
 begin
